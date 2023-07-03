@@ -7,41 +7,39 @@ using UnityEngine.EventSystems;
 public class HueManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [SerializeField] private PlayerController controller;
-    [SerializeField] private float returnSpeed = 5f; 
-    [SerializeField] private float smoothTime = 0.2f;
 
     private RectTransform dragArea;
+    private RectTransform rectTransform;
     private Vector2 initialPosition;
-    private Vector2 targetPosition; 
-    private Vector2 currentVelocity; 
     private bool isDragging = false;
-    private bool isReturning = false; 
 
     private void Start()
     {
         dragArea = transform.parent.GetComponent<RectTransform>();
+        rectTransform = GetComponent<RectTransform>();
         initialPosition = transform.localPosition;
-        targetPosition = initialPosition;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (!isReturning)
-        {
-            GameManager.instance.UpdateState(GameState.SelectColor);
-            isDragging = true;
-        }
+        GameManager.instance.UpdateState(GameState.SelectColor);
+        isDragging = true;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (!isReturning && isDragging)
+        if (isDragging)
         {
             Vector2 localPoint;
             if (RectTransformUtility.ScreenPointToLocalPointInRectangle(dragArea, eventData.position, eventData.pressEventCamera, out localPoint))
             {
-                localPoint.x = Mathf.Clamp(localPoint.x, dragArea.rect.xMin, dragArea.rect.xMax);
-                localPoint.y = Mathf.Clamp(localPoint.y, dragArea.rect.yMin, dragArea.rect.yMax);
+                float minX = dragArea.rect.xMin + rectTransform.sizeDelta.x * 0.5f;
+                float maxX = dragArea.rect.xMax - rectTransform.sizeDelta.x * 0.5f;
+                float minY = dragArea.rect.yMin + rectTransform.sizeDelta.y * 0.5f;
+                float maxY = dragArea.rect.yMax - rectTransform.sizeDelta.y * 0.5f;
+
+                localPoint.x = Mathf.Clamp(localPoint.x, minX, maxX);
+                localPoint.y = Mathf.Clamp(localPoint.y, minY, maxY);
 
                 transform.localPosition = localPoint;
             }
@@ -50,27 +48,9 @@ public class HueManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (!isReturning)
-        {
-            GameManager.instance.UpdateState(GameState.Play);
-            isDragging = false;
-
-            StartCoroutine(ReturnToInitialPosition());
-        }
-    }
-
-    private IEnumerator ReturnToInitialPosition()
-    {
-        isReturning = true;
-
-        while (Vector2.Distance(transform.localPosition, targetPosition) > 0.01f)
-        {
-            transform.localPosition = Vector2.SmoothDamp(transform.localPosition, targetPosition, ref currentVelocity, smoothTime, returnSpeed);
-            yield return null;
-        }
-
-        transform.localPosition = targetPosition;
-        isReturning = false;
+        GameManager.instance.UpdateState(GameState.Play);
+        isDragging = false;
+        transform.localPosition = initialPosition;
     }
 
     public void ChangeToRed()
