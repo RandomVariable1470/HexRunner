@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 enum Colorr
@@ -20,7 +22,9 @@ public class Hue : MonoBehaviour
 
     private HueManager manager;
     private Animator anim;
-    private bool hover = false;
+    public bool hover = false;
+
+    private readonly int HOVER_TAG = Animator.StringToHash("Hover");
 
     private void Start()
     {
@@ -32,19 +36,20 @@ public class Hue : MonoBehaviour
     }
 
     private void Update()
-    {
+    { 
         bool isColliding = CheckCollision();
 
         if (isColliding)
         {
-            anim.SetBool("Hover", true);
+            anim.SetBool(HOVER_TAG, true);
             hover = true;
         }
         else
         {
-            anim.SetBool("Hover", false);
+            anim.SetBool(HOVER_TAG, false);
             hover = false;
         }
+
 
         if (hover)
         {
@@ -69,15 +74,14 @@ public class Hue : MonoBehaviour
         }
     }
 
+
     private bool CheckCollision()
     {
-        // Get the screen space positions of the UI objects
         Vector3[] object1Corners = new Vector3[4];
         Vector3[] object2Corners = new Vector3[4];
         rectTransform1.GetWorldCorners(object1Corners);
         rectTransform2.GetWorldCorners(object2Corners);
 
-        // Check if the rectangles are overlapping
         bool isOverlapping = AreRectanglesOverlapping(object1Corners, object2Corners);
 
         return isOverlapping;
@@ -85,7 +89,6 @@ public class Hue : MonoBehaviour
 
     private bool AreRectanglesOverlapping(Vector3[] rect1Corners, Vector3[] rect2Corners)
     {
-        // Check if the rectangles are overlapping
         bool isOverlapping =
             rect1Corners[0].x < rect2Corners[2].x &&
             rect1Corners[2].x > rect2Corners[0].x &&
@@ -94,4 +97,6 @@ public class Hue : MonoBehaviour
 
         return isOverlapping;
     }
+
+
 }
