@@ -10,7 +10,7 @@ public class HueManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     #region Variables
     [SerializeField] private PlayerController controller;
     [SerializeField] private Material[] skybox;
-    [SerializeField] private Image image;
+    [SerializeField] private GameObject image;
     [SerializeField] private float changeSpeed = 2f;
     [SerializeField] private float maxSize = 1.5f;
     [SerializeField] private float minSize = 0.5f;
@@ -58,7 +58,7 @@ public class HueManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             }
         }
 
-        image.rectTransform.localScale = new Vector3(currentSize, currentSize, 0f);
+        image.transform.localScale = new Vector3(currentSize, currentSize, 0f);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -93,6 +93,7 @@ public class HueManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         GameManager.instance.UpdateState(GameState.Play);
         isDragging = false;
         transform.localPosition = initialPosition;
+        DynamicGI.UpdateEnvironment();
         StartDecreasingSize();
 
     }
@@ -120,7 +121,6 @@ public class HueManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         controller.OrangeColor.SetActive(false);
 
         RenderSettings.skybox = skybox[0];
-        DynamicGI.UpdateEnvironment();
 
         controller.red = true;
         controller.blue = false;
@@ -136,7 +136,6 @@ public class HueManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         controller.OrangeColor.SetActive(false);
 
         RenderSettings.skybox = skybox[1];
-        DynamicGI.UpdateEnvironment();
 
         controller.red = false;
         controller.blue = true;
@@ -152,7 +151,6 @@ public class HueManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         controller.OrangeColor.SetActive(true);
 
         RenderSettings.skybox = skybox[2];
-        DynamicGI.UpdateEnvironment();
 
         controller.red = false;
         controller.blue = false;
@@ -168,7 +166,6 @@ public class HueManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         controller.OrangeColor.SetActive(false);
 
         RenderSettings.skybox = skybox[3];
-        DynamicGI.UpdateEnvironment();
 
         controller.red = false;
         controller.blue = false;
