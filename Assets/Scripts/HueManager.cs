@@ -4,24 +4,31 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Threading.Tasks;
+using UnityEditor;
 
 public class HueManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     #region Variables
     [SerializeField] private PlayerController controller;
     [SerializeField] private Material[] skybox;
-    [SerializeField] private GameObject image;
-    [SerializeField] private float changeSpeed = 2f;
-    [SerializeField] private float maxSize = 1.5f;
-    [SerializeField] private float minSize = 0.5f;
+    [SerializeField] private Animator GrayScaleAnim;
+    [SerializeField] private float speed;
+    [field: SerializeField] public bool red { get; set; }
+    [field: SerializeField] public bool blue { get; set; }
+    [field: SerializeField] public bool green { get; set; }
+    [field: SerializeField] public bool orange { get; set; }
+    [field:SerializeField] public bool canInteract {  get; private set; }
 
-    private bool increaseSize = false;
-    private bool decreaseSize = false;
-    private float currentSize = 0f;
+    private Material[] mats1;
+    private Material[] mats2;
 
     private RectTransform dragArea;
     private RectTransform rectTransform;
     private Vector2 initialPosition;
+
+    private readonly int OUT_TAG = Animator.StringToHash("Out");
+
     public bool isDragging = false;
     #endregion
 
@@ -37,35 +44,12 @@ public class HueManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
     #region Handlers
 
-    private void Update()
-    {
-        if (increaseSize)
-        {
-            currentSize += changeSpeed * Time.deltaTime;
-            if (currentSize >= maxSize)
-            {
-                currentSize = maxSize;
-                increaseSize = false;
-            }
-        }
-        else if (decreaseSize)
-        {
-            currentSize -= changeSpeed * Time.deltaTime;
-            if (currentSize <= minSize)
-            {
-                currentSize = minSize;
-                decreaseSize = false;
-            }
-        }
-
-        image.transform.localScale = new Vector3(currentSize, currentSize, 0f);
-    }
-
     public void OnBeginDrag(PointerEventData eventData)
     {
         GameManager.instance.UpdateState(GameState.SelectColor);
         isDragging = true;
-        StartIncreasingSize();
+        GrayScaleAnim.SetBool(OUT_TAG, true);
+        canInteract = true;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -88,32 +72,55 @@ public class HueManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         }
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    public async void OnEndDrag(PointerEventData eventData)
     {
-        GameManager.instance.UpdateState(GameState.Play);
-        isDragging = false;
+        canInteract = false;
+
+        UIManager.Instance.HueWheelIn();
+
         transform.localPosition = initialPosition;
+
+        GrayScaleAnim.SetBool(OUT_TAG, false);
+
+        await Task.Delay(300);
+
+        ColorHandler();
+
+        await Task.Delay(300);
+
+        GameManager.instance.UpdateState(GameState.Play);
+        UIManager.Instance.HueWheelOut();
+
+        isDragging = false;
+
         DynamicGI.UpdateEnvironment();
-        StartDecreasingSize();
-
     }
 
-    public void StartIncreasingSize()
-    {
-        increaseSize = true;
-        decreaseSize = false;
-    }
-
-    public void StartDecreasingSize()
-    {
-        decreaseSize = true;
-        increaseSize = false;
-    }
     #endregion
 
     #region Colorrs
 
-    public void ChangeToRed()
+    private void ColorHandler()
+    {
+        if (red)
+        {
+            ChangeToRed();
+        }
+        else if (green)
+        {
+            ChangeToGreen();
+        }
+        else if (blue)
+        {
+            ChangeToBlue();
+        }
+        else if (orange)
+        {
+            ChangeToOrange();
+        }
+    }
+
+    private void ChangeToRed()
     {
         controller.RedColor.SetActive(true);
         controller.BlueColor.SetActive(false);
@@ -122,13 +129,23 @@ public class HueManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
         RenderSettings.skybox = skybox[0];
 
+        foreach(var item in controller.platform)
+        {
+            mats1 = item.materials;
+            mats1[1] = controller.groundMat[0];
+            item.materials = mats1;
+        }
+        mats2 = controller.platformEnd.materials;
+        mats2[2] = controller.groundMat[0];
+        controller.platformEnd.materials = mats2;
+
         controller.red = true;
         controller.blue = false;
         controller.green = false;
         controller.orange = false;
     }
 
-    public void ChangeToBlue()
+    private void ChangeToBlue()
     {
         controller.RedColor.SetActive(false);
         controller.BlueColor.SetActive(true);
@@ -137,13 +154,23 @@ public class HueManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
         RenderSettings.skybox = skybox[1];
 
+        foreach (var item in controller.platform)
+        {
+            mats1 = item.materials;
+            mats1[1] = controller.groundMat[1];
+            item.materials = mats1;
+        }
+        mats2 = controller.platformEnd.materials;
+        mats2[2] = controller.groundMat[1];
+        controller.platformEnd.materials = mats2;
+
         controller.red = false;
         controller.blue = true;
         controller.green = false;
         controller.orange = false;
     }
 
-    public void ChangeToOrange()
+    private void ChangeToOrange()
     {
         controller.RedColor.SetActive(false);
         controller.BlueColor.SetActive(false);
@@ -152,13 +179,23 @@ public class HueManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
         RenderSettings.skybox = skybox[2];
 
+        foreach (var item in controller.platform)
+        {
+            mats1 = item.materials;
+            mats1[1] = controller.groundMat[2];
+            item.materials = mats1;
+        }
+        mats2 = controller.platformEnd.materials;
+        mats2[2] = controller.groundMat[2];
+        controller.platformEnd.materials = mats2;
+
         controller.red = false;
         controller.blue = false;
         controller.green = false;
         controller.orange = true;
     }
 
-    public void ChangeToGreen()
+    private void ChangeToGreen()
     {
         controller.RedColor.SetActive(false);
         controller.BlueColor.SetActive(false);
@@ -166,6 +203,16 @@ public class HueManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         controller.OrangeColor.SetActive(false);
 
         RenderSettings.skybox = skybox[3];
+
+        foreach (var item in controller.platform)
+        {
+            mats1 = item.materials;
+            mats1[1] = controller.groundMat[3];
+            item.materials = mats1;
+        }
+        mats2 = controller.platformEnd.materials;
+        mats2[2] = controller.groundMat[3];
+        controller.platformEnd.materials = mats2;
 
         controller.red = false;
         controller.blue = false;

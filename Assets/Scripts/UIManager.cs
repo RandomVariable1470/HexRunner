@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -8,11 +9,27 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject HueBtn;
     [SerializeField] private GameObject HueWheel;
 
+    private Animator hueWheelAnim;
+
+    private readonly int IN_TAG = Animator.StringToHash("In");
+
+    public static UIManager Instance { get; private set; }
+
     #region Initialization
 
     private void Awake()
     {
         GameManager.OnGameStateChanged += GameManagerOnGameStateChanged;
+
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
+
+    private void Start()
+    {
+        hueWheelAnim = HueWheel.GetComponent<Animator>();
     }
 
     private void OnDestroy()
@@ -43,5 +60,15 @@ public class UIManager : MonoBehaviour
     public void HueColorBtnsFunc()
     {
         GameManager.instance.UpdateState(GameState.Play);
+    }
+
+    public void HueWheelIn()
+    {
+        hueWheelAnim.SetBool(IN_TAG, true);
+    }
+
+    public void HueWheelOut()
+    {
+        hueWheelAnim.SetBool(IN_TAG, false);
     }
 }

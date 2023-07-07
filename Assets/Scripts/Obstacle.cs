@@ -26,7 +26,7 @@ public class Obstacle : MonoBehaviour
                 case Type.Red:
                     if (controller.red)
                     {
-                        Destroy(this.gameObject);
+                        return;
                     }
                     else
                     {
@@ -37,7 +37,7 @@ public class Obstacle : MonoBehaviour
                 case Type.Green:
                     if (controller.green)
                     {
-                        Destroy(this.gameObject);
+                        return;
                     }
                     else
                     {
@@ -48,7 +48,7 @@ public class Obstacle : MonoBehaviour
                 case Type.Blue:
                     if (controller.blue)
                     {
-                        Destroy(this.gameObject);
+                        return;
                     }
                     else
                     {
@@ -59,7 +59,7 @@ public class Obstacle : MonoBehaviour
                 case Type.Orange:
                     if (controller.orange)
                     {
-                        Destroy(this.gameObject);
+                        return;
                     }
                     else
                     {

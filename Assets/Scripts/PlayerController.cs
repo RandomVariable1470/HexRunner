@@ -16,6 +16,10 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField] public bool blue { get; set; }
     [field: SerializeField] public GameObject GreenColor { get; set; }
     [field: SerializeField] public bool green { get; set; }
+    [Header("GroundMat")]
+    [field:SerializeField] public Material[] groundMat;
+    [field:SerializeField] public MeshRenderer[] platform;
+    [field:SerializeField] public MeshRenderer platformEnd;
 
     private Animator animator;         
     private Rigidbody rb;               

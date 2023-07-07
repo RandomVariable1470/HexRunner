@@ -40,37 +40,52 @@ public class Hue : MonoBehaviour
     { 
         bool isColliding = CheckCollision();
 
-        if (isColliding)
+        if (manager.canInteract)
         {
-            anim.SetBool(HOVER_TAG, true);
-            hover = true;
-        }
-        else
-        {
-            anim.SetBool(HOVER_TAG, false);
-            hover = false;
-        }
-
-
-        if (hover)
-        {
-            switch (colorr)
+            if (isColliding)
             {
-                case Colorr.Red:
-                    manager.ChangeToRed();
-                    break;
+                anim.SetBool(HOVER_TAG, true);
+                hover = true;
+            }
+            else
+            {
+                anim.SetBool(HOVER_TAG, false);
+                hover = false;
+            }
 
-                case Colorr.Green:
-                    manager.ChangeToGreen();
-                    break;
 
-                case Colorr.Blue:
-                    manager.ChangeToBlue();
-                    break;
+            if (hover)
+            {
+                switch (colorr)
+                {
+                    case Colorr.Red:
+                        manager.red = true;
+                        manager.green = false;
+                        manager.blue = false;
+                        manager.orange = false;
+                        break;
 
-                case Colorr.Orange:
-                    manager.ChangeToOrange();
-                    break;
+                    case Colorr.Green:
+                        manager.red = false;
+                        manager.green = true;
+                        manager.blue = false;
+                        manager.orange = false;
+                        break;
+
+                    case Colorr.Blue:
+                        manager.red = false;
+                        manager.green = false;
+                        manager.blue = true;
+                        manager.orange = false;
+                        break;
+
+                    case Colorr.Orange:
+                        manager.red = false;
+                        manager.green = false;
+                        manager.blue = false;
+                        manager.orange = true;
+                        break;
+                }
             }
         }
     }
