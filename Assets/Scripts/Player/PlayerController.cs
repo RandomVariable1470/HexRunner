@@ -1,4 +1,6 @@
 using UnityEngine;
+using Cinemachine;
+using System.Threading.Tasks;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
@@ -7,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;      
     [SerializeField] private bool stop = false;   
     [SerializeField] private float interpolationSpeed = 5f;
+    [SerializeField] private CinemachineVirtualCamera virtualCamera;
 
     [field: SerializeField] public GameObject RedColor { get; set; }
     [field: SerializeField] public bool red { get; set; }
@@ -59,9 +62,20 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
     }
 
+    public async void StartDancing()
+    {
+        stop = true;
+        virtualCamera.Follow = null;
+        virtualCamera.LookAt = null;
+        transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
+        await Task.Delay(800);
+        animator.SetTrigger(DANCE_TAG);
+    }
+
     #region Cached Properties
 
     private readonly int SPEED_TAG = Animator.StringToHash("Speed");
+    private readonly int DANCE_TAG = Animator.StringToHash("Dance");
 
     #endregion
 }

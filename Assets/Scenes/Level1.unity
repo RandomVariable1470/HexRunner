@@ -1469,7 +1469,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1076686251}
-  m_LocalRotation: {x: 0.31056312, y: 3e-45, z: -1e-45, w: 0.95055276}
+  m_LocalRotation: {x: 0.31056312, y: -1e-45, z: 0, w: 0.95055276}
   m_LocalPosition: {x: 0, y: 3.2289999, z: -3.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2709,7 +2709,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687258581}
-  m_LocalRotation: {x: 0.31056312, y: 3e-45, z: -1e-45, w: 0.95055276}
+  m_LocalRotation: {x: 0.31056312, y: -1e-45, z: -0, w: 0.95055276}
   m_LocalPosition: {x: 0, y: 2.329, z: -3.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4011,6 +4011,8 @@ GameObject:
   - component: {fileID: 4207520159388959378}
   - component: {fileID: 2125956322988684888}
   - component: {fileID: 139755169}
+  - component: {fileID: 4207520159388959379}
+  - component: {fileID: 4207520159388959380}
   m_Layer: 0
   m_Name: Platform_End
   m_TagString: Untagged
@@ -5370,6 +5372,31 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 468399045381183373}
   m_Mesh: {fileID: -5495902117074765545, guid: 923ebdea4e4c7f94d935c134826afec7, type: 3}
+--- !u!65 &4207520159388959379
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468399045381183373}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.0056647984, y: 0.019999998, z: 0.024928343}
+  m_Center: {x: -0.007922062, y: -0, z: 0.022542616}
+--- !u!114 &4207520159388959380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468399045381183373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12f31bc271358f34b9c60b3c7dbdd2c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4246922441271728508
 GameObject:
   m_ObjectHideFlags: 0
@@ -5819,6 +5846,7 @@ MonoBehaviour:
   moveSpeed: 3
   stop: 0
   interpolationSpeed: 5
+  virtualCamera: {fileID: 1076686252}
   <RedColor>k__BackingField: {fileID: 261224093}
   <red>k__BackingField: 1
   <OrangeColor>k__BackingField: {fileID: 1747564300}
