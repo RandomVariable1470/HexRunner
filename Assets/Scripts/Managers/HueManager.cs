@@ -44,9 +44,10 @@ public class HueManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
     #region Handlers
 
-    public void OnBeginDrag(PointerEventData eventData)
+    public async void OnBeginDrag(PointerEventData eventData)
     {
         GameManager.instance.UpdateState(GameState.SelectColor);
+        await Task.Delay(50);
         isDragging = true;
         GrayScaleAnim.SetBool(OUT_TAG, true);
         canInteract = true;
@@ -82,11 +83,11 @@ public class HueManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
         GrayScaleAnim.SetBool(OUT_TAG, false);
 
-        await Task.Delay(300);
+        await Task.Delay(75);
 
         ColorHandler();
 
-        await Task.Delay(300);
+        await Task.Delay(75);
 
         GameManager.instance.UpdateState(GameState.Play);
         UIManager.Instance.HueWheelOut();
