@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public GameState gameState;
+    public PlayerController playerController;
     public bool isPlaying;
 
     public static GameManager instance;
