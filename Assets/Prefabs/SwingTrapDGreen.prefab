@@ -261,6 +261,7 @@ GameObject:
   - component: {fileID: 8644472655038355229}
   - component: {fileID: 5592700734681742481}
   - component: {fileID: 1881376066247956003}
+  - component: {fileID: 2285729524378408209}
   m_Layer: 0
   m_Name: SwingTrapDGreen
   m_TagString: Untagged
@@ -334,3 +335,27 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 2.8329728, z: 1}
   m_Center: {x: 0, y: 0.21736358, z: 0}
+--- !u!205 &2285729524378408209
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8549758922289670519}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.6
+    fadeTransitionWidth: 0
+    renderers: []
+  - screenRelativeHeight: 0.3
+    fadeTransitionWidth: 0
+    renderers: []
+  - screenRelativeHeight: 0.1
+    fadeTransitionWidth: 0
+    renderers: []
+  m_Enabled: 1

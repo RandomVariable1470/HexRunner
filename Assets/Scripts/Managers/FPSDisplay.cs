@@ -1,29 +1,46 @@
 ﻿using UnityEngine;
+using System.Collections;
 using TMPro;
- 
-public class FPSDisplay : MonoBehaviour {
-	public TextMeshProUGUI FpsText;
-	
-	private float pollingTime = 1f;
-	private float time;
-	private int frameCount;
+using System.Text;
 
- 
-	void Update() {
-		// Update time.
-		time += Time.deltaTime;
+public class FPSDisplay : MonoBehaviour
+{
+    public TextMeshProUGUI fpsText;
 
-		// Count this frame.
-		frameCount++;
+    private float pollingTime = 1f;
+    private float time;
+    private int frameCount;
 
-		if (time >= pollingTime) {
-			// Update frame rate.
-			int frameRate = Mathf.RoundToInt((float)frameCount / time);
-			FpsText.text = frameRate.ToString() + " fps";
+    private StringBuilder stringBuilder;
 
-			// Reset time and frame count.
-			time -= pollingTime;
-			frameCount = 0;
-		}
-	}
+    private void Awake()
+    {
+        stringBuilder = new StringBuilder();
+    }
+
+    private void Start()
+    {
+        StartCoroutine(UpdateFPS());
+    }
+
+    private IEnumerator UpdateFPS()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(pollingTime);
+
+            int frameRate = Mathf.RoundToInt((float)frameCount / pollingTime);
+            stringBuilder.Clear();
+            stringBuilder.Append(frameRate.ToString()).Append(" fps");
+            fpsText.text = stringBuilder.ToString();
+
+            frameCount = 0;
+        }
+    }
+
+    private void Update()
+    {
+        time += Time.deltaTime;
+        frameCount++;
+    }
 }

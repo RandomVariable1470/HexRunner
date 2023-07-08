@@ -8,14 +8,10 @@ public class FinishLine : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == PLAYER_TAG)
-        {
-            PlayerController player = other.GetComponent<PlayerController>();
+        if (!other.CompareTag(PLAYER_TAG))
+            return;
 
-            if (player != null)
-            {
-                player.StartDancing();
-            }
-        }
+        PlayerController player = other.GetComponent<PlayerController>();
+        player?.StartDancing();
     }
 }

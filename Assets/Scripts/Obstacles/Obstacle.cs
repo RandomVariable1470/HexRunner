@@ -18,6 +18,72 @@ public class Obstacle : MonoBehaviour
 
     private void Update()
     {
+       ColorStatementUpdate();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        PlayerController controller = other.GetComponent<PlayerController>();
+
+        if (controller != null && other.tag == PLYAER_TAG)
+        {
+            ColorStatmentTrigger(controller);
+        }
+    }
+
+    #region ColorStatements
+
+    private void ColorStatmentTrigger(PlayerController controller)
+    {
+        switch (type)
+        {
+            case Type.Red:
+                if (controller.red)
+                {
+                    return;
+                }
+                else
+                {
+                    GameManager.instance.RestartLevel();
+                }
+                break;
+
+            case Type.Green:
+                if (controller.green)
+                {
+                    return;
+                }
+                else
+                {
+                    GameManager.instance.RestartLevel();
+                }
+                break;
+
+            case Type.Blue:
+                if (controller.blue)
+                {
+                    return;
+                }
+                else
+                {
+                    GameManager.instance.RestartLevel();
+                }
+                break;
+
+            case Type.Orange:
+                if (controller.orange)
+                {
+                    return;
+                }
+                else
+                {
+                    GameManager.instance.RestartLevel();
+                }
+                break;
+        }
+    }
+    private void ColorStatementUpdate()
+    {
         switch (type)
         {
             case Type.Red:
@@ -66,59 +132,5 @@ public class Obstacle : MonoBehaviour
 
         }
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        PlayerController controller = other.GetComponent<PlayerController>();
-
-        if (controller != null && other.tag == PLYAER_TAG)
-        {
-            switch (type)
-            {
-                case Type.Red:
-                    if (controller.red)
-                    {
-                        return;
-                    }
-                    else
-                    {
-                        GameManager.instance.RestartLevel();
-                    }
-                    break;
-
-                case Type.Green:
-                    if (controller.green)
-                    {
-                        return;
-                    }
-                    else
-                    {
-                        GameManager.instance.RestartLevel();
-                    }
-                    break;
-
-                case Type.Blue:
-                    if (controller.blue)
-                    {
-                        return;
-                    }
-                    else
-                    {
-                        GameManager.instance.RestartLevel();
-                    }
-                    break;
-
-                case Type.Orange:
-                    if (controller.orange)
-                    {
-                        return;
-                    }
-                    else
-                    {
-                        GameManager.instance.RestartLevel();
-                    }
-                    break;
-            }
-        }
-    }
+    #endregion
 }

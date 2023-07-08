@@ -23,7 +23,6 @@ public class Hue : MonoBehaviour
     private HueManager manager;
     private Animator anim;
     public bool hover = false;
-    private bool wasColliding;
 
     private readonly int HOVER_TAG = Animator.StringToHash("Hover");
 
@@ -113,6 +112,4 @@ public class Hue : MonoBehaviour
 
         return isOverlapping;
     }
-
-
 }
