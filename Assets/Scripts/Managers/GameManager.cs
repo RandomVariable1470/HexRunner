@@ -66,26 +66,31 @@ public class GameManager : MonoBehaviour
     private void Menu()
     {
         Time.timeScale = 1f;
+        Time.fixedDeltaTime = Time.timeScale * 0.02f;
     }
 
     private void Play()
     {
         Time.timeScale = 1f;
+        Time.fixedDeltaTime = Time.timeScale * 0.02f;
     }
 
     private void SelectColor()
     {
         Time.timeScale = 0.1f;
+        Time.fixedDeltaTime = Time.timeScale * 0.02f;
     }
 
     private void Victory()
     {
         Time.timeScale = 1f;
+        Time.fixedDeltaTime = Time.timeScale * 0.02f;
     }
 
-    private void Loose()
+    private void Loose()    
     {
-        Time.timeScale = 0.4f;
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = Time.timeScale * 0.02f;
     }
 }
 
