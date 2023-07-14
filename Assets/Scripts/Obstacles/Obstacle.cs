@@ -23,7 +23,7 @@ public class Obstacle : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        PlayerController controller = other.GetComponent<PlayerController>();
+        PlayerReference controller = other.GetComponent<PlayerReference>();
 
         if (controller != null && other.tag == PLYAER_TAG)
         {
@@ -33,7 +33,7 @@ public class Obstacle : MonoBehaviour
 
     #region ColorStatements
 
-    private void ColorStatmentTrigger(PlayerController controller)
+    private void ColorStatmentTrigger(PlayerReference controller)
     {
         switch (type)
         {
@@ -87,7 +87,7 @@ public class Obstacle : MonoBehaviour
         switch (type)
         {
             case Type.Red:
-                if (GameManager.instance.playerController.red)
+                if (GameManager.instance.playerRef.red)
                 {
                     axe.SetActive(false);
                 }
@@ -98,7 +98,7 @@ public class Obstacle : MonoBehaviour
                 break;
 
             case Type.Green:
-                if (GameManager.instance.playerController.green)
+                if (GameManager.instance.playerRef.green)
                 {
                     axe.SetActive(false);
                 }
@@ -109,7 +109,7 @@ public class Obstacle : MonoBehaviour
                 break;
 
             case Type.Blue:
-                if (GameManager.instance.playerController.blue)
+                if (GameManager.instance.playerRef.blue)
                 {
                     axe.SetActive(false);
                 }
@@ -120,7 +120,7 @@ public class Obstacle : MonoBehaviour
                 break;
 
             case Type.Orange:
-                if (GameManager.instance.playerController.orange)
+                if (GameManager.instance.playerRef.orange)
                 {
                     axe.SetActive(false);
                 }

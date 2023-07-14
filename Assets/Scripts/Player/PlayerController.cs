@@ -9,32 +9,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;      
     [SerializeField] private bool stop = false;   
     [SerializeField] private float interpolationSpeed = 5f;
-    [SerializeField] private CinemachineVirtualCamera virtualCamera;
-
-    [field: SerializeField] public GameObject RedColor { get; set; }
-    [field: SerializeField] public bool red { get; set; }
-    [field: SerializeField] public GameObject OrangeColor { get; set; }
-    [field: SerializeField] public bool orange { get; set; }
-    [field: SerializeField] public GameObject BlueColor { get; set; }
-    [field: SerializeField] public bool blue { get; set; }
-    [field: SerializeField] public GameObject GreenColor { get; set; }
-    [field: SerializeField] public bool green { get; set; }
-    [Header("GroundMat")]
-    [field:SerializeField] public Material[] groundMat;
-    [field:SerializeField] public MeshRenderer[] platform;
-    [field:SerializeField] public MeshRenderer platformEnd;
-
-    [Header("Footsteps")]
-    [SerializeField] private AudioClip[] footStepClip;
 
     private Animator animator;
-    private AudioSource audioSource;
+    private PlayerReference reference;
     private Rigidbody rb;               
     private float targetSpeed;           
 
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        reference = GetComponent<PlayerReference>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         targetSpeed = 0f;
@@ -70,24 +53,12 @@ public class PlayerController : MonoBehaviour
     public async void StartDancing()
     {
         stop = true;
-        virtualCamera.Follow = null;
-        virtualCamera.LookAt = null;
+        reference.virtualCamera.Follow = null;
+        reference.virtualCamera.LookAt = null;
         transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
         await Task.Delay(800);
         animator.SetTrigger(DANCE_TAG);
     }
-
-    public void FootStep()
-    {
-        AudioClip clip = GetRandomClip();
-        audioSource.PlayOneShot(clip);
-    }
-
-    private AudioClip GetRandomClip()
-    {
-        return footStepClip[Random.Range(0, footStepClip.Length)];
-    }
-
     #region Cached Properties
 
     private readonly int SPEED_TAG = Animator.StringToHash("Speed");

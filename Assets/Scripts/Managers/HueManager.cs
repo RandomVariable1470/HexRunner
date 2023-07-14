@@ -1,16 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Threading.Tasks;
-using UnityEditor;
 
 public class HueManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     #region Variables
-    [SerializeField] private PlayerController controller;
+    [SerializeField] private PlayerReference controller;
     [SerializeField] private Material[] skybox;
     [SerializeField] private Animator GrayScaleAnim;
     [SerializeField] private float speed;
@@ -128,6 +123,8 @@ public class HueManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         controller.GreenColor.SetActive(false);
         controller.OrangeColor.SetActive(false);
 
+        controller.impulseSource.GenerateImpulse();
+
         RenderSettings.skybox = skybox[0];
 
         foreach(var item in controller.platform)
@@ -152,6 +149,8 @@ public class HueManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         controller.BlueColor.SetActive(true);
         controller.GreenColor.SetActive(false);
         controller.OrangeColor.SetActive(false);
+
+        controller.impulseSource.GenerateImpulse();
 
         RenderSettings.skybox = skybox[1];
 
@@ -178,6 +177,8 @@ public class HueManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         controller.GreenColor.SetActive(false);
         controller.OrangeColor.SetActive(true);
 
+        controller.impulseSource.GenerateImpulse();
+
         RenderSettings.skybox = skybox[2];
 
         foreach (var item in controller.platform)
@@ -202,6 +203,8 @@ public class HueManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         controller.BlueColor.SetActive(false);
         controller.GreenColor.SetActive(true);
         controller.OrangeColor.SetActive(false);
+
+        controller.impulseSource.GenerateImpulse();
 
         RenderSettings.skybox = skybox[3];
 
