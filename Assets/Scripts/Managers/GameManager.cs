@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public GameState gameState;
     public PlayerController playerController;
     public bool isPlaying;
+    public AudioSource[] audioSources;
 
     public static GameManager instance;
     public static Action<GameState> OnGameStateChanged;
@@ -67,30 +68,55 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
+
+        foreach (AudioSource audioSource in audioSources)
+        {
+            audioSource.pitch = Time.timeScale;
+        }
     }
 
     private void Play()
     {
         Time.timeScale = 1f;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
+
+        foreach (AudioSource audioSource in audioSources)
+        {
+            audioSource.pitch = Time.timeScale;
+        }
     }
 
     private void SelectColor()
     {
         Time.timeScale = 0.1f;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
+
+        foreach (AudioSource audioSource in audioSources)
+        {
+            audioSource.pitch = Time.timeScale;
+        }
     }
 
     private void Victory()
     {
         Time.timeScale = 1f;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
+
+        foreach (AudioSource audioSource in audioSources)
+        {
+            audioSource.pitch = Time.timeScale;
+        }
     }
 
     private void Loose()    
     {
         Time.timeScale = 1f;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
+
+        foreach (AudioSource audioSource in audioSources)
+        {
+            audioSource.pitch = Time.timeScale;
+        }
     }
 }
 

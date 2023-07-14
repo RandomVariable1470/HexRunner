@@ -24,12 +24,17 @@ public class PlayerController : MonoBehaviour
     [field:SerializeField] public MeshRenderer[] platform;
     [field:SerializeField] public MeshRenderer platformEnd;
 
-    private Animator animator;         
+    [Header("Footsteps")]
+    [SerializeField] private AudioClip[] footStepClip;
+
+    private Animator animator;
+    private AudioSource audioSource;
     private Rigidbody rb;               
     private float targetSpeed;           
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         targetSpeed = 0f;
@@ -70,6 +75,17 @@ public class PlayerController : MonoBehaviour
         transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
         await Task.Delay(800);
         animator.SetTrigger(DANCE_TAG);
+    }
+
+    public void FootStep()
+    {
+        AudioClip clip = GetRandomClip();
+        audioSource.PlayOneShot(clip);
+    }
+
+    private AudioClip GetRandomClip()
+    {
+        return footStepClip[Random.Range(0, footStepClip.Length)];
     }
 
     #region Cached Properties
