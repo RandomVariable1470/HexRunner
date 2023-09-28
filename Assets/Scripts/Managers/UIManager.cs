@@ -8,6 +8,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject TapToStartBtn;
     [SerializeField] private GameObject HueBtn;
     [SerializeField] private GameObject HueWheel;
+    [Space(5)]
+    [SerializeField] private GameObject SettingsMenu;
+    [SerializeField] private GameObject SettingsMenuBtn;
 
     private Animator hueWheelAnim;
 
