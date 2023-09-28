@@ -1,6 +1,7 @@
 # **Hex Runner** 
 
-**Made in Unity** ![Unity](https://img.shields.io/badge/unity-%23000000.svg?style=for-the-badge&logo=unity&logoColor=white)
+**Made in Unity** 
+![Unity](https://img.shields.io/badge/unity-%23000000.svg?style=for-the-badge&logo=unity&logoColor=white)
 
 *Get ready to embark on a thrilling journey of reflexes and strategy in Hex Runner, the ultimate hyper-casual game that will keep you hooked for hours! Hex Runner is a fast-paced, adrenaline-pumping experience that combines lightning-quick decision-making with mesmerizing graphics and an addictive gameplay loop.*
 
